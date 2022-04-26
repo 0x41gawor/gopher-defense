@@ -14,7 +14,9 @@ const (
 func main() {
 	ebiten.SetWindowSize(SCREENWIDTH, SCREENHEIGHT)
 	ebiten.SetWindowTitle(TITLE)
-	if err := ebiten.RunGame(&Game{}); err != nil {
+
+	var game = NewGame()
+	if err := ebiten.RunGame(&game); err != nil {
 		log.Fatal(err)
 	}
 }
