@@ -2,27 +2,18 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"log"
 )
 
-type Game struct{}
-
-func (g *Game) Update() error {
-	return nil
-}
-
-func (g *Game) Draw(screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, "Hello, World!")
-}
-
-func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
-}
+const (
+	SCREENWIDTH  = 1280
+	SCREENHEIGHT = 800
+	TITLE        = "Gopher Defence"
+)
 
 func main() {
-	ebiten.SetWindowSize(640, 480)
-	ebiten.SetWindowTitle("Hello, World!")
+	ebiten.SetWindowSize(SCREENWIDTH, SCREENHEIGHT)
+	ebiten.SetWindowTitle(TITLE)
 	if err := ebiten.RunGame(&Game{}); err != nil {
 		log.Fatal(err)
 	}
