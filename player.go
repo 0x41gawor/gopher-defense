@@ -21,6 +21,7 @@ type Player struct {
 	body     *ebiten.Image
 	pos      util.Vector
 	velocity float64
+	gun      Gun
 }
 
 func NewPlayer() Player {
@@ -33,6 +34,7 @@ func NewPlayer() Player {
 		img,
 		util.Vector{X: startX, Y: startY},
 		velocity,
+		NewGun(),
 	}
 }
 
@@ -60,11 +62,17 @@ func (p *Player) Update() {
 	} else if p.pos.X < 0 {
 		p.pos.X = 0
 	}
-
+	if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
+		x, y := ebiten.CursorPosition()
+		targetPos := Vector{X: float64(x), Y: float64(y)}
+		p.gun.bullets = append(p.gun.bullets, NewBullet(p.pos, targetPos))
+	}
+	p.gun.Update(p.pos)
 }
 
 func (p *Player) Draw(screen *ebiten.Image) {
 	opt := &ebiten.DrawImageOptions{}
 	opt.GeoM.Translate(p.pos.X-sizeX/2, p.pos.Y-sizeY/2)
 	screen.DrawImage(p.body, opt)
+	p.gun.Draw(screen)
 }

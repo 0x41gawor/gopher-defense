@@ -21,23 +21,23 @@ type Bullet struct {
 	msY  float64
 }
 
-func NewBullet(startPos Vector, aimPos Vector) *Bullet {
+func NewBullet(startPos Vector, targetPos Vector) *Bullet {
 	image := ebiten.NewImage(width, height)
 	image.Fill(color.White)
 
-	a := math.Abs(startPos.Y-aimPos.Y) / math.Abs(startPos.X-aimPos.X)
+	a := math.Abs(startPos.Y-targetPos.Y) / math.Abs(startPos.X-targetPos.X)
 	angle := math.Atan(a)
 
 	msX := 10 * math.Cos(angle)
 	msY := 10 * math.Sin(angle)
 
-	if aimPos.X <= startPos.X {
+	if targetPos.X <= startPos.X {
 		msX *= -1
-		if aimPos.Y < startPos.Y {
+		if targetPos.Y < startPos.Y {
 			msY *= -1
 		}
 	} else {
-		if aimPos.Y < startPos.Y {
+		if targetPos.Y < startPos.Y {
 			msY *= -1
 		}
 	}
