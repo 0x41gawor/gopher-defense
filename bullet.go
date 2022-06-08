@@ -15,10 +15,10 @@ const (
 )
 
 type Bullet struct {
+	body *ebiten.Image
 	pos  Vector
 	msX  float64 // ms - movement speed
 	msY  float64
-	body *ebiten.Image
 }
 
 func NewBullet(startPos Vector, aimPos Vector) *Bullet {
@@ -43,10 +43,10 @@ func NewBullet(startPos Vector, aimPos Vector) *Bullet {
 	}
 
 	return &Bullet{
+		image,
 		startPos,
 		msX,
 		msY,
-		image,
 	}
 }
 
