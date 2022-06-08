@@ -4,11 +4,19 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+const (
+	SCREENWIDTH  = 1280
+	SCREENHEIGHT = 800
+	TITLE        = "Gopher Defence"
+)
+
 type Game struct {
 	player Player
 }
 
 func NewGame() Game {
+	ebiten.SetWindowSize(SCREENWIDTH, SCREENHEIGHT)
+	ebiten.SetWindowTitle(TITLE)
 	var player = NewPlayer()
 	return Game{player: player}
 }
