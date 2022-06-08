@@ -12,6 +12,8 @@ import (
 const (
 	startX   = 20
 	startY   = 20
+	sizeX    = 28
+	sizeY    = 50
 	velocity = 10
 )
 
@@ -47,10 +49,22 @@ func (p *Player) Update() {
 	if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
 		p.pos.X += p.velocity
 	}
+
+	if p.pos.Y > SCREENHEIGHT {
+		p.pos.Y = SCREENHEIGHT
+	} else if p.pos.Y < 0 {
+		p.pos.Y = 0
+	}
+	if p.pos.X > SCREENWIDTH {
+		p.pos.X = SCREENWIDTH
+	} else if p.pos.X < 0 {
+		p.pos.X = 0
+	}
+
 }
 
 func (p *Player) Draw(screen *ebiten.Image) {
 	opt := &ebiten.DrawImageOptions{}
-	opt.GeoM.Translate(p.pos.X, p.pos.Y)
+	opt.GeoM.Translate(p.pos.X-sizeX/2, p.pos.Y-sizeY/2)
 	screen.DrawImage(p.body, opt)
 }
