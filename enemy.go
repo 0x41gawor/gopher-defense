@@ -44,9 +44,24 @@ func (e *Enemy) Draw(screen *ebiten.Image) {
 	screen.DrawImage(e.bodyGreen, opt)
 }
 
-func (e *Enemy) Update() {
-	e.pos.X += 0.0
-	e.pos.Y += 0.0
+func (e *Enemy) Update(playerPos Vector) {
+	// update moving dir
+	var msX, msY float64
+	if playerPos.X < e.pos.X {
+		msX = e.ms * -1
+	} else {
+		msX = e.ms * 1
+	}
+	if playerPos.Y < e.pos.Y {
+		msY = e.ms * -1
+	} else {
+		msY = e.ms * 1
+	}
+	// move
+	e.pos.X += msX
+	e.pos.Y += msY
+
+	// update health image
 	e.bodyGreen = ebiten.NewImage(sizeX+2, int(float32(sizeY)*e.health/e.maxHealth))
 	e.bodyGreen.Fill(color.RGBA{G: 0xff, A: 0xff})
 }

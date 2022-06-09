@@ -19,13 +19,13 @@ func NewGame() Game {
 	ebiten.SetWindowSize(SCREENWIDTH, SCREENHEIGHT)
 	ebiten.SetWindowTitle(TITLE)
 	var player = NewPlayer()
-	var enemy = NewEnemy(30, 50, 0, 80, 100)
+	var enemy = NewEnemy(30, 50, 1, 80, 100)
 	return Game{player: player, enemy: enemy}
 }
 
 func (g *Game) Update() error {
 	g.player.Update()
-	g.enemy.Update()
+	g.enemy.Update(g.player.pos)
 	return nil
 }
 
