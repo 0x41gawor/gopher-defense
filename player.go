@@ -34,45 +34,45 @@ func NewPlayer() Player {
 		img,
 		util.Vector{X: startX, Y: startY},
 		velocity,
-		NewGun(),
+		NewGun(0.2),
 	}
 }
 
-func (p *Player) Update() {
+func (this *Player) Update(dt float64) {
 	if inpututil.KeyPressDuration(ebiten.KeyW) > 0 {
-		p.pos.Y -= p.velocity
+		this.pos.Y -= this.velocity
 	}
 	if inpututil.KeyPressDuration(ebiten.KeyS) > 0 {
-		p.pos.Y += p.velocity
+		this.pos.Y += this.velocity
 	}
 	if inpututil.KeyPressDuration(ebiten.KeyA) > 0 {
-		p.pos.X -= p.velocity
+		this.pos.X -= this.velocity
 	}
 	if inpututil.KeyPressDuration(ebiten.KeyD) > 0 {
-		p.pos.X += p.velocity
+		this.pos.X += this.velocity
 	}
 
-	if p.pos.Y > SCREENHEIGHT {
-		p.pos.Y = SCREENHEIGHT
-	} else if p.pos.Y < 0 {
-		p.pos.Y = 0
+	if this.pos.Y > SCREENHEIGHT {
+		this.pos.Y = SCREENHEIGHT
+	} else if this.pos.Y < 0 {
+		this.pos.Y = 0
 	}
-	if p.pos.X > SCREENWIDTH {
-		p.pos.X = SCREENWIDTH
-	} else if p.pos.X < 0 {
-		p.pos.X = 0
+	if this.pos.X > SCREENWIDTH {
+		this.pos.X = SCREENWIDTH
+	} else if this.pos.X < 0 {
+		this.pos.X = 0
 	}
 	if inpututil.IsMouseButtonJustReleased(ebiten.MouseButtonLeft) {
 		x, y := ebiten.CursorPosition()
 		targetPos := Vector{X: float64(x), Y: float64(y)}
-		p.gun.bullets = append(p.gun.bullets, NewBullet(p.pos, targetPos))
+		this.gun.fire(targetPos, dt)
 	}
-	p.gun.Update(p.pos)
+	this.gun.Update(this.pos, dt)
 }
 
-func (p *Player) Draw(screen *ebiten.Image) {
+func (this *Player) Draw(screen *ebiten.Image) {
 	opt := &ebiten.DrawImageOptions{}
-	opt.GeoM.Translate(p.pos.X-sizeX/2, p.pos.Y-sizeY/2)
-	screen.DrawImage(p.body, opt)
-	p.gun.Draw(screen)
+	opt.GeoM.Translate(this.pos.X-sizeX/2, this.pos.Y-sizeY/2)
+	screen.DrawImage(this.body, opt)
+	this.gun.Draw(screen)
 }

@@ -5,35 +5,42 @@ import (
 )
 
 const (
-	SCREENWIDTH  = 1280
-	SCREENHEIGHT = 800
+	SCREENWIDTH  = 1920 / 2
+	SCREENHEIGHT = 1080 / 2
 	TITLE        = "Gopher Defence"
 )
 
 type Game struct {
-	player Player
-	enemy  Enemy
+	player   Player
+	zombie   Zombie
+	skeleton Skeleton
+	time     float64
 }
 
 func NewGame() Game {
 	ebiten.SetWindowSize(SCREENWIDTH, SCREENHEIGHT)
 	ebiten.SetWindowTitle(TITLE)
 	var player = NewPlayer()
-	var enemy = NewEnemy(30, 50, 1, 80, 100)
-	return Game{player: player, enemy: enemy}
+	var zombie = NewZombie(30, 50, 1, 80, 100)
+	var skeleton = NewSkeleton(40, 60, 0.5, 40, 200)
+	return Game{player: player, zombie: zombie, skeleton: skeleton}
 }
 
-func (g *Game) Update() error {
-	g.player.Update()
-	g.enemy.Update(g.player.pos)
+func (this *Game) Update() error {
+	dt := 1.0 / 60.0
+
+	this.player.Update(dt)
+	this.zombie.Update(this.player.pos)
+	this.skeleton.Update(this.player.pos)
 	return nil
 }
 
-func (g *Game) Draw(screen *ebiten.Image) {
-	g.player.Draw(screen)
-	g.enemy.Draw(screen)
+func (this *Game) Draw(screen *ebiten.Image) {
+	this.player.Draw(screen)
+	this.zombie.Draw(screen)
+	this.skeleton.Draw(screen)
 }
 
-func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
+func (this *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
 	return SCREENWIDTH, SCREENHEIGHT
 }
