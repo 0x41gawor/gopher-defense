@@ -31,7 +31,7 @@ func (this *Game) Update() error {
 
 	this.player.Update(dt)
 	this.zombie.Update(this.player.pos)
-	this.skeleton.Update(this.player.pos)
+	this.skeleton.Update(dt, this.player.pos)
 	return nil
 }
 

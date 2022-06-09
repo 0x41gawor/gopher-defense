@@ -30,17 +30,19 @@ func NewSkeleton(sizeX int, sizeY int, ms float64, health float32, maxHealth flo
 			health:     health,
 			maxHealth:  maxHealth,
 		},
-		NewGun(1.0),
+		NewGun(2.0),
 	}
 }
 
 func (this *Skeleton) Draw(screen *ebiten.Image) {
 	this.zombie.Draw(screen)
+	this.gun.Draw(screen)
 }
 
-func (this *Skeleton) Update(playerPos Vector) {
+func (this *Skeleton) Update(dt float64, playerPos Vector) {
 	// update pos
 	this.zombie.Update(playerPos)
 	// update shooting
-
+	this.gun.fire(playerPos, dt)
+	this.gun.Update(dt, this.zombie.pos)
 }

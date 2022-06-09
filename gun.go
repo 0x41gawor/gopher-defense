@@ -22,7 +22,7 @@ func NewGun(attackSpeed float64) Gun {
 	return Gun{pos: Vector{}, attackSpeed: attackSpeed}
 }
 
-func (this *Gun) Update(pos Vector, dt float64) {
+func (this *Gun) Update(dt float64, pos Vector) {
 	this.pos = pos
 	for _, bullet := range this.bullets {
 		bullet.Update()

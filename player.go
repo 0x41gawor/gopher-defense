@@ -67,7 +67,7 @@ func (this *Player) Update(dt float64) {
 		targetPos := Vector{X: float64(x), Y: float64(y)}
 		this.gun.fire(targetPos, dt)
 	}
-	this.gun.Update(this.pos, dt)
+	this.gun.Update(dt, this.pos)
 }
 
 func (this *Player) Draw(screen *ebiten.Image) {
